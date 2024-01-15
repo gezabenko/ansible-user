@@ -1,3 +1,4 @@
 ---
 # defaults file for user
 user__default_state: 'present'
+user__default_authorized_key_state: 'present'

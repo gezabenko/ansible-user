@@ -27,3 +27,22 @@
     - user_user
     - manage
 
+- name: USER | Manage authorized_key file...
+  become: true
+  ansible.posix.authorized_key:
+    comment: '{{ item.comment | default(omit) }}'
+    exclusive: '{{item.exclusive | default(omit) }}'
+    follow: '{{ item.follow | default(omit) }}'
+    key: '{{ item.key }}'
+    key_options: '{{ item.key_options | default(omit) }}'
+    manage_dir: '{{ item.manage_dir | default(omit) }}'
+    path: '{{ item.path | default(omit) }}'
+    state: '{{ item.state | default(user__default_authorized_key_state) }}'
+    user: '{{ item.user }}'
+    validate_cert: '{{ item.validate_cert | default(omit) }}'
+  with_items: '{{ user_user.authorized_key }}'
+  loop: '{{ user_user }}'
+  when: item.authorized_key is defined
+  tags:
+    - manage
+    - authorized_key
