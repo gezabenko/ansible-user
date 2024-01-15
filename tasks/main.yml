@@ -1,26 +1,29 @@
 ---
 # tasks file for user
 - name: USER | Managing users...
+  become: true
   ansible.builtin.user:
-    comment: {{ item.comment | default("") }}
-    create_home: {{ item.create_home | default("true") }}
-    expires: {{ item.expires | default("-1") }}
-    force: {{ item.force | default("false") }}
-    group: {{ item.group | default("{{ item }}") }}
-    groups: {{ item.groups | default("") }}
-    home: {{ item.home | default("/home/{{ item }}") }}
-    local: {{ item.local | default("false") }}
-    move_home: {{ item.move_home | default("false") }}
-    name: {{ item }}
-    non_unique: {{ item.non_unique | default("false") }}
-    password: {{ item.password | default("!") }}
-    remove: {{ item.remove | default("false") }}
-    shell: {{ item.shell | default("/bin/sh") }}
-    state: {{ item.state | default("present") }}
-    system: {{ item.system | default("false") }}
-    uid: {{ item.uid | default("") }}
-    umask: {{ item.umask | default("022") }}
-    update_password: {{ item.update_password | default("always") }}
-  with_items: '{{ user }}'
-  tags: [ manage ]
+    comment: '{{ item.comment | default(omit) }}'
+    create_home: '{{ item.create_home | default(omit) }}'
+    expires: '{{ item.expires | default(omit) }}'
+    group: '{{ item.group | default(omit) }}'
+    groups: '{{ item.groups | default(omit) }}'
+    home: '{{ item.home | default(omit) }}'
+    local: '{{ item.local | default(omit) }}'
+    move_home: '{{ item.move_home | default(omit) }}'
+    name: '{{ item.name }}'
+    non_unique: '{{ item.non_unique | default(omit) }}'
+    password: '{{ item.password | default(omit) }}'
+    remove: '{{ item.remove | default(omit) }}'
+    shell: '{{ item.shell | default(omit) }}'
+    state: '{{ item.state | default(user__default_state) }}'
+    system: '{{ item.system | default(omit) }}'
+    uid: '{{ item.uid | default(omit) }}'
+    umask: '{{ item.umask | default(omit) }}'
+    update_password: '{{ item.update_password | default(omit) }}'
+  with_items: '{{ user_user }}'
+  when: user_user is defined
+  tags:
+    - user_user
+    - manage
 

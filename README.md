@@ -14,12 +14,11 @@ Role Variables
 Only one variable need (`name`) and implemented the next parameters:
 
 ```yaml
-user:
+user_user:
   backup:
     comment: 'Backup user'
     create_home: 'true'
     expires: '-1'
-    force: 'false'
     groups: 'backup, ssh_user'
     home: '/opt/backup'
     local: 'false'
