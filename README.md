@@ -14,7 +14,7 @@ Role Variables
 Only one variable need (`name`) and implemented the next parameters:
 
 ```yaml
-user_user:
+user:
   backup:
     comment: 'Backup user'
     create_home: 'true'
@@ -32,12 +32,15 @@ user_user:
     uid: '9999'
     umask: '077'
     update_password: 'always'
+    authorized_key:
+      key: 'ssh-rsa ...
 ```
 
 Dependencies
 ------------
 
 - [ansible.builtin.user](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/user_module.html#ansible-collections-ansible-builtin-user-module)
+- [ansible.postfix.authorized_key](https://docs.ansible.com/ansible/latest/collections/ansible/posix/authorized_key_module.html)
 
 Example Playbook
 ----------------

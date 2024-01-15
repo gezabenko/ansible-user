@@ -21,28 +21,28 @@
     uid: '{{ item.uid | default(omit) }}'
     umask: '{{ item.umask | default(omit) }}'
     update_password: '{{ item.update_password | default(omit) }}'
-  with_items: '{{ user_user }}'
-  when: user_user is defined
+  with_items: '{{ user }}'
+  when: user is defined
   tags:
-    - user_user
+    - user
     - manage
 
 - name: USER | Manage authorized_key file...
   become: true
   ansible.posix.authorized_key:
-    comment: '{{ item.comment | default(omit) }}'
-    exclusive: '{{item.exclusive | default(omit) }}'
-    follow: '{{ item.follow | default(omit) }}'
-    key: '{{ item.key }}'
-    key_options: '{{ item.key_options | default(omit) }}'
-    manage_dir: '{{ item.manage_dir | default(omit) }}'
-    path: '{{ item.path | default(omit) }}'
-    state: '{{ item.state | default(user__default_authorized_key_state) }}'
-    user: '{{ item.user }}'
-    validate_cert: '{{ item.validate_cert | default(omit) }}'
-  with_items: '{{ user_user.authorized_key }}'
-  loop: '{{ user_user }}'
+    comment: '{{ item.authorized_key.comment | default(omit) }}'
+    exclusive: '{{item.authorized_key.exclusive | default(omit) }}'
+    follow: '{{ item.authorized_key.follow | default(omit) }}'
+    key: '{{ item.authorized_key.key }}'
+    key_options: '{{ item.authorized_key.key_options | default(omit) }}'
+    manage_dir: '{{ item.authorized_key.manage_dir | default(omit) }}'
+    path: '{{ item.authorized_key.path | default(omit) }}'
+    state: '{{ item.authorized_key.state | default(user__default_authorized_key_state) }}'
+    user: '{{ item.name }}'
+    validate_cert: '{{ item.authorized_key.validate_cert | default(omit) }}'
+  with_items: '{{ item.authorized_key }}'
+  loop: '{{ user }}'
   when: item.authorized_key is defined
   tags:
-    - manage
     - authorized_key
+    - manage
